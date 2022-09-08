@@ -1,0 +1,17 @@
+.svg {
+  width: 800px;
+  position: absolute;
+  right: 0;
+  top: -5px;
+}
+
+.circle {
+  width: 500px;
+  height: 500px;
+  background-color: #f53e3d;
+  border-radius: 50%;
+  position: absolute;
+  left: -250px;
+  bottom: -250px;
+}
+
