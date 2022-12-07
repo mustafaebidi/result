@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import {  Fragment, useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 
 import { FaKey } from "react-icons/fa";
@@ -10,16 +10,22 @@ import { useSelector } from "react-redux";
 
 import { selectCurrentResource } from "../store/slice/lang";
 import { useLoginMutation } from "../store/slice/auth/authApiSlice";
+import ReactLoading from "react-loading";
 
 import { toast } from 'react-toastify';
 
 
 
 
+
+
 const Login=()=>{
 
-    const [login, {error}] = useLoginMutation()
+    const [login, {error,status}] = useLoginMutation()
     const currentResource = useSelector(selectCurrentResource)
+
+
+    console.log(status)
 
 
 
@@ -94,44 +100,53 @@ const Login=()=>{
 
     return(
 
-        <motion.div
-            initial={{ opacity: 0, scale: 0.5 }} 
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }} 
-        >
-            <motion.div className="flex flex-col gap-4 mb-4 text-center">
-                <h2 className="text-5xl	font-bold">{currentResource.welcomeBack}</h2>
-                <span className="text-gray-500 font-bold">{currentResource.loginToContinue}</span>
+        
+        
+        <Fragment>
+
+            <div className={` ${status === "pending" ?"flex" :"hidden"} flex justify-center items-center h-[100%] w-[100%] bg-[#ffffff56]   top-0 fixed  left-0  z-50`}>
+                <ReactLoading type="bubbles" color="#F53E3D" height={100} width={50} />
+            </div>
+            
+            <motion.div
+                initial={{ opacity: 0, scale: 0.5 }} 
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }} 
+            >
+                <motion.div className="flex flex-col gap-4 mb-4 text-center">
+                    <h2 className="text-5xl	font-bold">{currentResource.welcomeBack}</h2>
+                    <span className="text-gray-500 font-bold">{currentResource.loginToContinue}</span>
+                </motion.div>
+    
+                <form className="flex flex-col gap-6" autoComplete="off">
+
+                    {fields.map((field)=>{
+                        const{id,icon,...rest}=field
+                        return(
+                            <Input onChange={onChange} key={id} icon={icon} {...rest}/>
+                        )
+                    })}
+
+
+                    <div className="">
+                        <Link to="/forget-password">{currentResource["forgetPassword!"]}</Link>
+                    </div>
+
+                    <div className="text-center text-red-600">{error ? (error?.data?.msg || error?.data?.errors[0]?.msg ) : null}</div>
+
+                    <div  className="flex flex-col gap-10 text-center">
+                        <button onClick={onSubmit} className="bg-main p-2 text-[white] cursor-pointer rounded">
+                            {currentResource.login}
+                        </button>
+
+                        <NavLink className="bg-main  text-[white] rounded  block p-2" to="/signup">{currentResource.signup}</NavLink>
+
+                    </div>
+
+
+                </form>
             </motion.div>
- 
-            <form className="flex flex-col gap-6" autoComplete="off">
-
-                {fields.map((field)=>{
-                    const{id,icon,...rest}=field
-                    return(
-                        <Input onChange={onChange} key={id} icon={icon} {...rest}/>
-                    )
-                })}
-
-
-                <div className="">
-                    <Link to="/forget-password">{currentResource["forgetPassword!"]}</Link>
-                </div>
-
-                <div className="text-center text-red-600">{error ? (error?.data?.msg || error?.data?.errors[0]?.msg ) : null}</div>
-
-                <div  className="flex flex-col gap-10 text-center">
-                    <button onClick={onSubmit} className="bg-main p-2 text-[white] cursor-pointer rounded">
-                        {currentResource.login}
-                    </button>
-
-                    <NavLink className="bg-main  text-[white] rounded  block p-2" to="/signup">{currentResource.signup}</NavLink>
-
-                </div>
-
-
-            </form>
-        </motion.div>
+        </Fragment>
     )
 }
 export default Login

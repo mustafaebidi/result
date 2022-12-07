@@ -17,8 +17,8 @@ const GeneralStatistics=()=>{
 
     return(<Table>
 
-        <TableHead>
-            <TableRow>
+        <TableHead  className="mu:hidden">
+            <TableRow >
                 {head.map((col,index)=>{
                     return(
                         <TableCell className=" font-bold text-lg" key={index} align="center">{col}</TableCell>
@@ -33,10 +33,11 @@ const GeneralStatistics=()=>{
                 {
                     listData.map((col,index)=>{
                         return <TableRow className={`${index % 2 ? 'bg-[#dde4dd]' :""}`} >
-                            {col.map((cell)=>{
+                            {col.map((cell,index)=>{
                                 return(
-                                    <TableCell className=" font-bold  text-base"  align="center">
-                                        {cell}
+                                    <TableCell data-content={head[index]} className={`font-bold  flex-wrap mu:flex gap-4 justify-center`}  align="center">
+                                        <div  className="hidden mu:block   basis-[195px]">{head[index]}</div>
+                                        <div className="flex-1 min-w-fit">{cell}</div>
                                     </TableCell>
                                 )
                             })}

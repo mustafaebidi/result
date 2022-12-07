@@ -28,7 +28,7 @@ const CustomTable=({data,columns})=>{
 
                                 if(Render){
                                     return(
-                                        <TableCell className="mu:block" align={align} key={index}>
+                                        <TableCell className={`${id === "name" ? "mu: font-bold" :""} mu:block`} align={align} key={index}>
                                             <Render data={info} id={id} api={api}  />
                                         </TableCell>
                                     ) 
