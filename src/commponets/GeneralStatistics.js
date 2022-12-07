@@ -37,7 +37,7 @@ const GeneralStatistics=()=>{
                                 return(
                                     <TableCell data-content={head[index]} className={`font-bold  flex-wrap mu:flex gap-4 justify-center`}  align="center">
                                         <div  className="hidden mu:block   basis-[195px]">{head[index]}</div>
-                                        <div className="flex-1 min-w-fit">{cell}</div>
+                                        <div className="flex-1  basis-28">{cell}</div>
                                     </TableCell>
                                 )
                             })}
