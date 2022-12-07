@@ -25,7 +25,7 @@ const Input=(props)=>{
         <div>
             <div  className="flex">
                 <input
-                    autocomplete="false"
+                    autoComplete="off"
                     value={value} 
                     ref={ref} 
                     className="bg-input p-4 rounded border-none w-full outline-0" 
