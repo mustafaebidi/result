@@ -104,7 +104,7 @@ const Login=()=>{
                 <span className="text-gray-500 font-bold">{currentResource.loginToContinue}</span>
             </motion.div>
  
-            <form className="flex flex-col gap-6">
+            <form className="flex flex-col gap-6" autocomplete="off">
 
                 {fields.map((field)=>{
                     const{id,icon,...rest}=field

@@ -179,7 +179,7 @@ const Signup=()=>{
             <div className="mb-12 text-center">
                 <h1 className="text-5xl	font-bold">Sign Up</h1>
             </div>
-            <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+            <form className="flex flex-col gap-6" onSubmit={onSubmit} autocomplete="off">
 
                 {attrbit.map((elment)=>{
                     let {icon,id,...rests}=elment
