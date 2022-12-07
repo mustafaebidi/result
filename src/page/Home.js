@@ -1,6 +1,6 @@
 import {  useState } from "react"
 import { useNavigate } from "react-router-dom"
-import SearchBy from "../commponets/SearchBy"
+import SearchBy from "../commponets/searchBy"
 import { AiOutlineSearch } from "react-icons/ai";
 import { useGlobalContext } from "../context"
 import { toast } from 'react-toastify';
