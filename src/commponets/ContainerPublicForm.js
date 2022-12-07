@@ -1,4 +1,4 @@
-import {ReactComponent as ReactLogo} from '../../Untitled-3-01.svg';
+import {ReactComponent as ReactLogo} from '../assert/wave.svg';
 import { Outlet } from "react-router-dom";
 
 

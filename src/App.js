@@ -1,18 +1,20 @@
 
 import { Fragment, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ContainerPublicForm from './commponets/containerPublicForm/containerPublicForm';
-import Login from './commponets/login/login';
-import Signup from './commponets/signup/signup';
+import ContainerPublicForm from './commponets/ContainerPublicForm';
+import Login from './page/login';
+import Signup from './page/signup';
 import { useSelector } from "react-redux";
 import Forgetpassword from './commponets/forgetPassword';
 import Main from './commponets/Main';
-import Home from './commponets/Home';
+import Home from './page/Home';
 import RequireAuth from './commponets/RequireAuth';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import IsAuth from './commponets/IsAuth';
+import SingleResult from './page/SinglePageResult';
+import ResultsList from './page/ResultsList';
 
 
 
@@ -20,29 +22,23 @@ import IsAuth from './commponets/IsAuth';
 function App() {
 
 
-  const lang = useSelector((state)=>state.lang)
-
-
-
-  useEffect(()=>{
-
-
-    const language=lang.currentLocale
-
-    document.body.classList.add(`${lang.currentLocale}`)
-
-
-    return(()=>{
-      document.body.classList.remove(`${language}`)
-    })
-
-  },[lang])
 
 
   return (
     <Fragment>
 
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Routes>
 
@@ -58,15 +54,17 @@ function App() {
         <Route element={<RequireAuth/>}>
           <Route element={<Main/>}>
             <Route  path="/" element={<Home />} />
+            <Route  path="singleResult/:number" element={<SingleResult />} />
+            <Route  path="results" element={<ResultsList/>} />
           </Route>
         </Route>
 
 
       </Routes>
+      
     </Fragment>
   );
 }
 
 export default App;
 
-//<div className='change' onClick={()=>dispatch(changeLang("ar"))}> redsad</div>

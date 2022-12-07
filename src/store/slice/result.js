@@ -1,50 +1,43 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { Axios } from "axios";
-
-
-
-export const resultBySeatNumber = createAsyncThunk('result/seatNumber', async (data,thunkAPI) => {
-
-    try{
-        const response = await axios.post(registrationPath,data)
-        return response.data
-    }
-    catch(err){
-        return thunkAPI.rejectWithValue(err.response?.data?.errors[0]?.msg)
-    }
-
-})
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 
 
 const initialState ={
+    result:[],
+    loading:false,
 
-    status: 'idle',
-    isError:false,
-    isSuccess:false,
-    errorMsg:"",
-    data:""
 }
 
 
 const result = createSlice({
-    name: 'lang',
+    name: 'result',
     initialState,
     reducers: {
-        changeLang(state,action){
-
-            ///localStorage.setItem("language", `${action.payload}`);
-
-            state.currentLocale=action.payload
-            state.currentResource= action.payload === "en" ? en  : ar
-
+        saveResults(state,action){
+            state.result=action.payload
+        },
+        setloding(state,action){
+            console.log(action.payload)
+            state.loading=action.payload
         }
+
+
+        
     },
 
 })
 
-export const selectCurrentResource = (state)=>state.lang.currentResource
+export const dada = (state)=>state.result.loading
 
-export const { changeLang } = lang.actions
+
+export const selectCurrentResults = (state)=>state.result.result
+
+export const selectUserById = createSelector(
+    [selectCurrentResults,(state,id)=>id],
+    (result,id) => result.data.find((result)=>result._id === id) 
+)
+
+
+export const { saveResults,setloding } = result.actions
 
 export default result.reducer

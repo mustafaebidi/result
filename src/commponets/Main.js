@@ -1,8 +1,8 @@
-import { Fragment } from "react"
 
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+import { OptionProvider } from "../context";
 import Navbar from "./Navbar";
-
 
 
 
@@ -12,13 +12,14 @@ const Main=()=>{
 
 
 
-    return(
-        <Fragment>
-            <Navbar/>
 
-            <Outlet/>
-        
-        </Fragment>
+    return(
+            <Fragment>
+                <Navbar/>
+                <OptionProvider>
+                    <Outlet/>
+                </OptionProvider>
+            </Fragment>
     )
 }
 

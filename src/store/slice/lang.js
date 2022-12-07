@@ -10,7 +10,7 @@ const localSorageLang = localStorage.getItem('language');
 const initialState ={
 
     currentLocale: localSorageLang ?  localSorageLang :"en",
-    currentResource: localSorageLang ?  localSorageLang === "en" ? en :ar : en,
+    currentResource: localSorageLang ?  localSorageLang === "en" ? en :ar : ar,
     
 }
 

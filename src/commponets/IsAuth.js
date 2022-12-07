@@ -5,7 +5,6 @@ import { selectCurrentUser } from "../store/slice/auth"
 
 const IsAuth = () => {
 
-    console.log(888)
     const user = useSelector(selectCurrentUser)
     const location = useLocation()
 

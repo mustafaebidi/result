@@ -3,9 +3,19 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-family: "Poppins", sans-serif;
+  body {
+    font-family: "Poppins", sans-serif /*!important*/;
   }
+
+  body {
+    font-family: "Cairo", sans-serif;
+    direction: rtl;
+  }
+
+  :root {
+    --color-main: 111 114 185;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -17,6 +27,7 @@
 
 body.ar {
   font-family: "Cairo", sans-serif;
+  direction: rtl;
 }
 
 .change {
@@ -24,4 +35,41 @@ body.ar {
   background-color: red;
   width: fit-content;
   cursor: pointer;
+}
+
+.studentInfo-title {
+  @apply bg-studentInfo;
+}
+
+.unCalculatedGrades-title {
+  @apply bg-unCalculatedGrades;
+}
+
+.calculatedGrades-title {
+  @apply bg-calculatedGrades;
+}
+
+.calculatedGrades > div,
+.unCalculatedGrades > div {
+  @apply flex-1	text-center;
+}
+
+.studentInfo > div:last-of-type {
+  @apply flex-1	 text-center;
+}
+
+.studentInfo > div:first-of-type {
+  @apply basis-20;
+}
+
+.MuiTableHead-root {
+  background-color: red;
+}
+
+.MuiTableHead-root .MuiTableCell-root {
+  color: white !important;
+}
+
+.active {
+  @apply bg-[#ffaaaa8c] rounded-md font-bold	text-[#ffffffa6];
 }

@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 
 import { FaKey } from "react-icons/fa";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion"
-import Input from "../input/input";
-import { useSelector,useDispatch } from "react-redux";
-import { login, reset, selectCurrentUser } from "../../store/slice/auth";
+import Input from "../commponets/input";
 
-import { selectCurrentResource } from "../../store/slice/lang";
+import { useSelector } from "react-redux";
+
+import { selectCurrentResource } from "../store/slice/lang";
+import { useLoginMutation } from "../store/slice/auth/authApiSlice";
+
+import { toast } from 'react-toastify';
 
 
 
 
 const Login=()=>{
 
-
-    const dispath=useDispatch()
-
+    const [login, {error}] = useLoginMutation()
     const currentResource = useSelector(selectCurrentResource)
-    const {isError,errorMsg,isSuccess} =useSelector((state)=>state.auth)
-    const user = useSelector(selectCurrentUser)
 
 
 
@@ -43,10 +42,9 @@ const Login=()=>{
     
         }
     ]
-    
 
 
-    
+
 
     const[values,setValues]=useState({
         email:"",
@@ -61,35 +59,36 @@ const Login=()=>{
 
     }
 
-    const onSubmit=(e)=>{
+    const onSubmit=async (e)=>{
         e.preventDefault()
         const{email,password}=values
-        dispath(login({email,password}))
+
+        try{
+            const we= await login({ email, password }).unwrap()
+       
+        }
+        catch (err){
+            console.log(err)
+            if( err.status !== 401 && err.status !== 400){
+                toast.error('الانترنت مقطوع حاول الاتصال بالانترنت', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
+ 
+        }
     }
 
+    
 
-    //if(user){
-        //navigate("/", { replace: true })
-    //}
-
-
-    //useEffect(()=>{
-        //if(user){
-            //navigate("/")
-        //}
-
-    //},[navigate, user])
-
-
-    useEffect(()=>{
-
-        return(()=>{
-            dispath(reset())
-
-        })
-
-    },[dispath])
-
+    
 
 
 
@@ -119,7 +118,7 @@ const Login=()=>{
                     <Link to="/forget-password">{currentResource["forgetPassword!"]}</Link>
                 </div>
 
-                <div>{isError}</div>
+                <div className="text-center text-red-600">{error ? (error?.data?.msg || error?.data?.errors[0]?.msg ) : null}</div>
 
                 <div  className="flex flex-col gap-10 text-center">
                     <button onClick={onSubmit} className="bg-main p-2 text-[white] cursor-pointer rounded">

@@ -1,18 +1,17 @@
-import { Fragment, useState ,useEffect} from "react";
+import {  useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
-import Input from "../input/input";
+import Input from "../commponets/input";
 import { motion } from "framer-motion"
-import { useSelector ,useDispatch } from "react-redux";
-import { reset, selectCurrentUser, signup } from "../../store/slice/auth";
+import { useSelector  } from "react-redux";
 
 import { Navigate} from 'react-router-dom'
 
-import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { selectCurrentResource } from "../../store/slice/lang";
+import { selectCurrentResource } from "../store/slice/lang";
+import { useSignupMutation } from "../store/slice/auth/authApiSlice";
 
 const username=/^[A-Za-z0-9]{3,16}$/
 const email=/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -27,14 +26,8 @@ const password=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
 const Signup=()=>{
 
-    
-
-
     const currentResource = useSelector(selectCurrentResource)
-    const {isError,errorMsg,isSuccess} =useSelector((state)=>state.auth)
-
-    const dispatch=useDispatch()
-
+    const [signup,{isSuccess,error}] =useSignupMutation()
 
     const [values, setValues] = useState({
         username:{
@@ -131,51 +124,48 @@ const Signup=()=>{
     }
 
 
-    const onSubmit=(e)=>{
+    const onSubmit=async(e)=>{
+
         e.preventDefault()
-        dispatch(signup({email:values.email.value,password:values.password.value,username:values.username.value}))
+
+        const password=values.password.value
+        const email=values.email.value
+        const username=values.username.value
+
+        try{
+            const result=await signup({username,email,password}).unwrap()
+            toast.success('تم التسجيل بنجاح', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            console.log(result)
+        }
+        catch(err){
+            console.log(err)
+            if( err.status !== 401 && err.status !== 400){
+                toast.error('الانترنت مقطوع حاول الاتصال بالانترنت', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        }
         
     }
 
-    //useEffect(()=>{
-
-        //if(isSuccess){
-
-            //navigate("/login") 
-        //}
-
-    //},[currentResource, dispatch, errorMsg, isError, isSuccess, navigate])
-
-
-    //useEffect(()=>{
-        //if(isSuccess){
-
-            ///navigate("/login") 
-    
-        //}
-
-        //return(()=>{
-            //dispatch(reset())
-        //})
-
-    //},[dispatch, isSuccess, navigate])
-
-
 
     if(isSuccess){
-
-        toast.success('🦄 Wow so easy!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        
-        return <Navigate to="/" replace />
-
+        return <Navigate to="/login" replace />
     }
 
     return(
@@ -200,7 +190,7 @@ const Signup=()=>{
 
                 })}
 
-                <div className="text-center text-red-600">{errorMsg}</div>
+                <div className="text-center text-red-600">{error && (error?.data?.msg || error?.data?.errors[0]?.msg )}</div>
 
                 <button   
                     className="bg-main p-2 text-[white]  rounded mt-10 disabled:opacity-75 " 
@@ -209,6 +199,8 @@ const Signup=()=>{
                 >
                     {currentResource.signup}
                 </button>
+
+                
 
 
             </form>

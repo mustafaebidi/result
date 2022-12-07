@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Input from "./input/input"
+import Input from "../commponets/input"
 
 import { MdEmail } from "react-icons/md";
 
@@ -19,7 +19,7 @@ const Forgetpassword=()=>{
         <div>
 
             <div className="mb-16 text-center">
-                <h1 className="text-4xl	font-bold">{currentResource.forgetPassword}</h1>
+                <h1 className="text-4xl	font-bold">إعادة تعيين كلمة المرور</h1>
             </div>
 
             <div>
