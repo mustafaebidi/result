@@ -4,6 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { nanoid } from 'nanoid'
 
 const head=["العام الدراسي","متقدم","حاضر","ناجح","نسبة النجاح"]
 
@@ -21,7 +22,7 @@ const GeneralStatistics=()=>{
             <TableRow >
                 {head.map((col,index)=>{
                     return(
-                        <TableCell className=" font-bold text-lg" key={index} align="center">{col}</TableCell>
+                        <TableCell  className=" font-bold text-lg" key={index} align="center">{col}</TableCell>
                     )
                 })}
 
@@ -32,10 +33,10 @@ const GeneralStatistics=()=>{
 
                 {
                     listData.map((col,index)=>{
-                        return <TableRow className={`${index % 2 ? 'bg-[#dde4dd]' :""}`} >
+                        return <TableRow key={`${index}${col.cell}`} className={`${index % 2 ? 'bg-[#dde4dd]' :""}`} >
                             {col.map((cell,index)=>{
                                 return(
-                                    <TableCell data-content={head[index]} className={`font-bold  flex-wrap mu:flex gap-4 justify-center`}  align="center">
+                                    <TableCell key={index} className={`font-bold  flex-wrap mu:flex gap-4 justify-center`}  align="center">
                                         <div  className="hidden mu:block   basis-[195px]">{head[index]}</div>
                                         <div className="flex-1  basis-28">{cell}</div>
                                     </TableCell>

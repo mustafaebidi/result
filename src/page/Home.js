@@ -59,32 +59,28 @@ const Home=()=>{
         try{
             
             if(searchBar.searchBy === "getResultByName" && Number.isInteger(Number(searchBar.value))){
-                const  res=await resultsBySittingNumber(searchBar.value).unwrap()
-                console.log(res)
+                await resultsBySittingNumber(searchBar.value).unwrap()
                 navigate(`singleResult/${searchBar.value}`)
                 return ;
 
             }
 
-            const res=await trigger({name:searchBar.value,page:1}).unwrap()
+            await trigger({name:searchBar.value,page:1}).unwrap()
             setOptions({...searchBar,page:1})
             navigate("results")
-            console.log(res)
 
         }
         catch(err){
 
-            console.log(err)
 
             if(err.status !== 404 && err.status !== 400 ){
-                console.log(err)
                 setErr("")
                 toast.error('الانترنت مقطوع حاول الاتصال بالانترنت', {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 4000,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
+                    pauseOnHover: false,
                     draggable: true,
                     progress: undefined,
                     theme: "light",
@@ -132,7 +128,7 @@ const Home=()=>{
 
                 </SearchBy>
 
-                <div className="text-[red]" to="SingleResult">{err}</div>           
+                <div className="text-[red] px-4" to="SingleResult">{err}</div>           
             </div>
 
       

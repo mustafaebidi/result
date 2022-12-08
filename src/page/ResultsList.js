@@ -23,9 +23,7 @@ const ResultsList=()=>{
 
 
 
-    const {data,error,isFetching,...rest} = resultApiSlice.endpoints[options.searchBy].useQuery({name:options.value,page})
-
-    console.log(rest)
+    const {data,error,isFetching} = resultApiSlice.endpoints[options.searchBy].useQuery({name:options.value,page})
 
 
 
@@ -38,36 +36,22 @@ const ResultsList=()=>{
             draggable: true,
             progress: undefined,
             theme: "colored",
-            toastId: "login",
-            });
+            toastId: "result",
+        });
     }
 
     
 
     const handlePagination=(e,page)=>{
-        console.log(page)
         setPage(page)
         setOptions((state)=>({...state,page}))
-
-
     }
 
 
 
     const handleChange=async(searchBy,value)=>{
-
-        try{
             setOptions((state)=>({...state,searchBy:searchBy,value:value,page:1}))
             setPage(1)
-
-        }
-        catch(err){
-
-            console.log(err)
-
-        }
-
-
     }
 
 
@@ -79,7 +63,7 @@ const ResultsList=()=>{
         
             Render:({data,id})=>{
                 return(
-                    <Link to={`/singleResult/${data["studentInfo"]["sittingNumber"]}`}>{data["studentInfo"][id]}</Link>
+                    <Link className="duration-300 hover:text-main" to={`/singleResult/${data["studentInfo"]["sittingNumber"]}`}>{data["studentInfo"][id]}</Link>
                 )
             }
     
@@ -95,7 +79,7 @@ const ResultsList=()=>{
             Render:({data,id})=>{
                 let value=data["studentInfo"][id]
                 return(
-                    <div className="cursor-pointer"  onClick={()=>handleChange("getBySchool",value)}>{value}</div>
+                    <div className="cursor-pointer  duration-300 hover:text-main"  onClick={()=>handleChange("getBySchool",value)}>{value}</div>
                 )
             }
 
@@ -109,7 +93,7 @@ const ResultsList=()=>{
             Render:({data,id})=>{
                 let value=data["studentInfo"][id]
                 return(
-                    <div className="cursor-pointer" onClick={()=>handleChange("getByAdministration",value)}>{value}</div>
+                    <div className="cursor-pointer duration-300 hover:text-main" onClick={()=>handleChange("getByAdministration",value)}>{value}</div>
                 )
     
             }

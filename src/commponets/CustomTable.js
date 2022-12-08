@@ -5,6 +5,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
+import { nanoid } from 'nanoid'
+
+
 const CustomTable=({data,columns})=>{
     return(
         <Table>
@@ -22,19 +25,19 @@ const CustomTable=({data,columns})=>{
             <TableBody>
                 {data.map((info,index)=>{
                     return(
-                        <TableRow className={`${index % 2 === 0 ? "bg-[#afafaf25]" :""}`} key={info["_id"]}>
+                        <TableRow className={`${index % 2 === 0 ? "bg-[#afafaf25]" :""}`} key={index} >
                             {columns.map(({id,Render,align,api},index)=>{
                                 let value=info["studentInfo"][id]
 
                                 if(Render){
                                     return(
-                                        <TableCell className={`${id === "name" ? "mu: font-bold" :""} mu:block`} align={align} key={index}>
+                                        <TableCell className={`${id === "name" ? "mu:font-bold" :""} mu:block`} align={align} key={`${index}${value}`}>
                                             <Render data={info} id={id} api={api}  />
                                         </TableCell>
                                     ) 
                                 }
         
-                                return <TableCell className="mu:block"  key={index} align="center">{value}</TableCell>
+                                return <TableCell className="mu:block"  key={`${index}${value}`} align="center">{value}</TableCell>
                                 
                                 
 

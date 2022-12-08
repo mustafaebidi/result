@@ -1,10 +1,9 @@
 
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ContainerPublicForm from './commponets/ContainerPublicForm';
 import Login from './page/login';
 import Signup from './page/signup';
-import { useSelector } from "react-redux";
 import Forgetpassword from './commponets/forgetPassword';
 import Main from './commponets/Main';
 import Home from './page/Home';
@@ -29,15 +28,14 @@ function App() {
 
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={true}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
-        theme="light"
+        pauseOnHover={false}
       />
 
       <Routes>

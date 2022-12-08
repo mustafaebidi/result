@@ -1,15 +1,14 @@
-//import { selectNotesResult } from "../store/slice/results/resultApiSlice"
 
 import {  useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 
 import { useGetResultsBySittingNumberQuery } from "../store/slice/results/resultApiSlice";
-import { Navigate} from 'react-router-dom'
 import { useGlobalContext } from "../context"
 
 import ReactLoading from "react-loading";
 
 import { resultApiSlice } from "../store/slice/results/resultApiSlice";
+import { useEffect } from "react";
 
 const bigData={
 
@@ -66,7 +65,7 @@ const SingleResult=()=>{
 
 
     const{number}=useParams()
-    const{data,isLoading,error}=useGetResultsBySittingNumberQuery(number)
+    const{data,isLoading}=useGetResultsBySittingNumberQuery(number)
 
     const {result} = resultApiSlice.endpoints[options.searchBy].useQuery({name:options.value,page:options.page},{
         selectFromResult: ({ data }) => ({
@@ -75,11 +74,16 @@ const SingleResult=()=>{
     })
 
 
-    console.log({name:options.value,page:options.page})
 
 
 
 
+
+    useEffect(()=>{
+
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    },[])
 
 
     if(isLoading && !result ){
@@ -111,7 +115,7 @@ const SingleResult=()=>{
 
 
     return(
-        <motion.div className="container mx-auto px-4 pt-20 pb-20">
+        <motion.div className="container mx-auto px-4 pt-20 pb-20  ">
  
    
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 flex-wrap ">
@@ -120,16 +124,19 @@ const SingleResult=()=>{
                     let baseTitle=entrie[0]
                     let data=Object.entries(entrie[1])
                     let count=0
-                    dalay=dalay+0.4
+                    dalay=dalay+0.1
 
 
                     
 
                     return(
                         <motion.div key={baseTitle} className="min-w-fit"
-                            initial={{ x: `${index % 2 ? '-100vw' :'100vw'}` }} 
-                            animate={{ x: 0 }}
-                            transition={{delay:dalay }} 
+                            initial={{ opacity:0 ,scale:0}}
+                            whileInView={{ opacity: 1 ,scale:1}}
+                            viewport={{ once: true }}
+                            /*animate={{ x: 0 }}*/
+                            transition={{delay:dalay,duration:0.6}} 
+                   
 
                             
                         >
@@ -137,7 +144,6 @@ const SingleResult=()=>{
 
                             <div>
                                 {data.map((info,index)=>{
-                                    console.log(info)
                                     let title=info[0]
                                     let value=info[1]
 
@@ -148,11 +154,11 @@ const SingleResult=()=>{
                                     }
 
                                     return(
-                                        <div key={`${baseTitle}${index}`} className={`flex gap-3 p-4 ${(index+count) % 2 ? 'bg-[#f1f1f1]' :""} ${baseTitle}`}>
+                                        <div key={`${baseTitle}${index}`} className={`flex  flex-wrap gap-3 p-4 ${(index+count) % 2 ? 'bg-[#f1f1f1]' :""}  justify-center ${baseTitle}`}>
 
-                                            <h5 className={`font-bold min-w-[110px] max-w-[110px]`}>{ bigData[baseTitle][title] ? bigData[baseTitle][title] :title }</h5>
+                                            <h5 className={`font-bold text-center  basis-[150px]`}>{ bigData[baseTitle][title] ? bigData[baseTitle][title] :title }</h5>
 
-                                            <h5 className={`${baseTitle ==="studentInfo" ?"font-semibold" :"font-bold"} w-full text-center`}> {value} </h5>
+                                            <h5 className={`${baseTitle ==="studentInfo" ?"font-semibold" :"font-bold"} basis-[150px]  flex-1 text-center`}> {value} </h5>
                                             
                                         </div>
                                     )

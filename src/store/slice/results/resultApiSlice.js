@@ -24,7 +24,6 @@ export const resultApiSlice = apiSlice.injectEndpoints({
                 try {
                     //dispatch(setloding(true))
                     const {data} = await queryFulfilled 
-                    console.log(apiSlice.util,"green",arg,data)
                     dispatch(saveResults( data ))
                     //dispatch(setloding(false))
 

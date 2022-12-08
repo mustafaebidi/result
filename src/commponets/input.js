@@ -11,11 +11,8 @@ const Input=(props)=>{
     const isValid=(value)=>{
 
         if(pattern){
-            ///return typeof(pattern) === typeof("") ?console.log(77) : pattern.test(value)
 
-            return (typeof(pattern) === typeof("")) ? 
-                                                        (pattern === value) ? true :false    
-                                                    : pattern.test(value)
+            return (typeof(pattern) === typeof("")) ? (pattern === value) ? true :false  : pattern.test(value)
         }
         return false
     }
